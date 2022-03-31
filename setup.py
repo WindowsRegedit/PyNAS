@@ -55,8 +55,6 @@ setup(
         'Development Status :: 3 - Alpha',
         # 开发的目标用户
         'Intended Audience :: Consumers',
-        # 属于什么类型
-        'Topic :: Software Development :: NAS',
         # 许可证信息
         'License :: OSI Approved :: MIT License',
 

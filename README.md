@@ -1,23 +1,23 @@
-# NAS
+# PyNAS
 
 #### 介绍
-Python NAS based on updog.
+Python NAS 在updog的基础上编写而成.
 
 #### 软件架构
-软件架构说明
+使用 Flask, Flask-Login, Flask-WTF 制作登陆界面.
 
 
 #### 安装教程
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+1.  pip install PyNAS
+2.  git clone https://gitee.com/shwufan/nas/nas.git
+    python setup.py install
 
 #### 使用说明
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+比如:
+nas -c conf.json
+nas --config configure.json
 
 #### 参与贡献
 
@@ -27,11 +27,11 @@ Python NAS based on updog.
 4.  新建 Pull Request
 
 
-#### 特技
+#### 教程
 
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+nas 配置编写指南：
+username: 登陆用户名
+password: 登陆密码
+host: 网盘服务ip
+（0.0.0.0允许所有人访问, 127.0.0.1只有自己能访问，默认0.0.0.0）
+port: 网盘服务端口（默认9090）

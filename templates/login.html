@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"> 
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+    <title>用户登录</title>
+    <script>
+        function GetURL()
+        {
+            var username=document.getElementById("username").value;
+            var password=document.getElementById("password").value;
+            var next=document.getElementById("next").value;
+            var extent="/ajax/login?name="+username+"&pwd="+password+"&next="+next;
+            var URL="http://"+window.location.host+extent;
+            window.location.href=URL;
+	}
+    </script>		
+    </head>
+
+    <body>
+    <div class="login">
+        <h2>登陆</h2>
+        <div class="login_form">
+            <span>账号：</span>
+            <input type="text" placeholder="请输入账号" id="username">
+            <br>
+            <span>密码：</span>
+            <input type="password" placeholder="请输入密码" id="password">
+        </div>
+        <input type="hidden" value="{{ next }}" id="next">
+        <div class="btn">
+            <button class="login_btn" onclick="GetURL()">登 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录</button>
+        </div>
+        {% if emsg %}
+            <h4>{{ emsg }}</h4>
+        {% endif %}
+    </div>
+    </body>
+</html>

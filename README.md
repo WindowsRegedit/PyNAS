@@ -10,7 +10,7 @@ Python NAS 在updog的基础上编写而成.
 #### 安装教程
 
 1.  pip install PyNAS
-2.  git clone https://gitee.com/shwufan/nas/nas.git
+2.  git clone https://gitee.com/shwufan/nas.git
     python setup.py install
 
 #### 使用说明
@@ -30,8 +30,14 @@ nas --config configure.json
 #### 教程
 
 nas 配置编写指南：
+
 username: 登陆用户名
+
 password: 登陆密码
+
 host: 网盘服务ip
+
 （0.0.0.0允许所有人访问, 127.0.0.1只有自己能访问，默认0.0.0.0）
+
 port: 网盘服务端口（默认9090）
+

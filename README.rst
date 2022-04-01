@@ -20,13 +20,13 @@ Python NAS 在updog的基础上编写而成.
 使用说明
 ^^^^^^^^
 
-比如: nas -c conf.json nas –config configure.json
+比如: nas -c conf.json nas --config configure.json
 
 参与贡献
 ^^^^^^^^
 
 1. Fork 本仓库
-2. 新建 Feat_xxx 分支
+2. 新建 Feat\_xxx 分支
 3. 提交代码
 4. 新建 Pull Request
 
@@ -51,3 +51,4 @@ port: 网盘服务端口（默认9090）
 1. 支持除了文件之外的命令行功能
 2. 添加了更多分类
 3. 切换至Beta版
+4. 添加了自动化部署代码

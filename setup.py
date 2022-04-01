@@ -1,5 +1,6 @@
 import os, shutil
 from setuptools import setup
+from config import version
 
 #移除构建的build文件夹
 CUR_PATH = os.path.dirname(os.path.abspath(__file__))
@@ -33,7 +34,7 @@ setup(
     project_urls={
         "Source Code": "https://gitee.com/shwufan/nas/",
     },
-    version = "3.4.6",
+    version = version,
     package_dir ={"": "."},
     package_data = {'': extra_files},
     entry_points={
@@ -48,23 +49,18 @@ setup(
         'pytest-cov>=2.5.1',
     ],
     classifiers=[
-        # 发展时期,常见的如下
-        #   3 - Alpha
-        #   4 - Beta
-        #   5 - Production/Stable
-        'Development Status :: 3 - Alpha',
-        # 开发的目标用户
-        'Intended Audience :: Developers',
-        # 许可证信息
+        'Development Status :: 4 - Beta',
+        'Intended Audience :: Customer Service',
         'License :: OSI Approved :: MIT License',
-
-        # 目标 Python 版本
+        'Framework :: Flask',
+        'Topic :: Internet :: File Transfer Protocol (FTP)',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
     ],
     long_description=open("README.rst", encoding="utf-8").read(),
 )

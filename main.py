@@ -16,21 +16,47 @@ from werkzeug.serving import run_simple
 
 from utils.path import is_valid_subpath, is_valid_upload_path, get_parent_directory, process_files
 from utils.output import error, info, warn, success
-from __init__ import version as VERSION
+from config import version as VERSION
 
 ##Warning:You must use Werkzeug==2.0.3 or below
+def read_write_directory(directory):
+    if os.path.exists(directory):
+        if os.access(directory, os.W_OK and os.R_OK):
+            return directory
+        else:
+            error('输出无法写入或读取')
+    else:
+        error('选择的文件夹不存在')
 
 def parse_arguments():
     parser = argparse.ArgumentParser(prog='nas')
+    cwd = os.getcwd()
+    parser.add_argument('-d', '--directory', metavar='DIRECTORY', type=read_write_directory, default=cwd,
+                        help='根目录，默认当前路径')
+    parser.add_argument('-p', '--port', type=int, default=9090,
+                        help='服务端口，默认为9090')
+    parser.add_argument('-usr', '--username', type=str, default='admin', help='登陆用户名，默认为admin')
+    parser.add_argument('-pwd', '--password', type=str, default='admin', help='登陆密码，默认为admin')
+    parser.add_argument('-v', '--version', action='version', version='Python NAS v'+VERSION, help="Python NAS 版本")
+    parser.add_argument('-host', '--host', default="0.0.0.0", type=str, help="服务IP，默认为0.0.0.0")
     parser.add_argument('-c', '--config', type=str, default='', help='配置文件位置，默认没有，注意此文件会覆盖所有命令行配置')
     args = parser.parse_args()
-    if os.path.exists(args.config):
-        with open(args.config, "r", encoding="utf-8") as f:
-            args = json.load(f)
+    if args.config:
+        if os.path.exists(args.config):
+            with open(args.config, "r", encoding="utf-8") as f:
+                args = json.load(f)
+                return args
+        else:
+            raise RuntimeError("配置文件错误：不存在")
     else:
-        raise RuntimeError("配置文件错误：不存在")
-
-    return args
+        args = {
+            "directory": args.directory,
+            "port": args.port,
+            "username": args.username,
+            "password": args.password,
+            "host": args.host
+        }
+        return args
 
 def main():
     args = parse_arguments()

@@ -39,7 +39,8 @@ setup(
     package_data = {'': extra_files},
     entry_points={
         "console_scripts": [
-            "nas = main:main"
+            "nas = main:main",
+            "nas-gui = main_gui:main"
         ]
     },
     include_package_data=True,
@@ -49,7 +50,7 @@ setup(
         'pytest-cov>=2.5.1',
     ],
     classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 3 - Alpha',
         'Intended Audience :: Customer Service',
         'License :: OSI Approved :: MIT License',
         'Framework :: Flask',

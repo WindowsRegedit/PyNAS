@@ -16,8 +16,10 @@ Python NAS 在updog的基础上编写而成.
 #### 使用说明
 
 比如:
-nas -c conf.json
-nas --config configure.json
+1. nas -c conf.json
+2. nas --config configure.json
+3. nas --username admin --password admin
+4. nas --host 0.0.0.0 --port 80 --username admin --password admin
 
 #### 参与贡献
 
@@ -42,7 +44,5 @@ host: 网盘服务ip
 port: 网盘服务端口（默认9090）
 
 #### 更新说明
-1. 支持除了文件之外的命令行功能
-2. 添加了更多分类
-3. 切换至Beta版
-4. 添加了自动化部署代码
+1. 由于添加了GUI，所以版本临时改动至Alpha版
+2. GUI仍然不稳定，不建议使用（如果要使用，请输入nas-gui）

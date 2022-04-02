@@ -19,6 +19,11 @@ from utils.output import error, info, warn, success
 from config import version as VERSION
 
 ##Warning:You must use Werkzeug==2.0.3 or below
+def handler(signal, frame):
+    print()
+    error('退出!')
+    exit(0)
+
 def read_write_directory(directory):
     if os.path.exists(directory):
         if os.access(directory, os.W_OK and os.R_OK):
@@ -58,8 +63,7 @@ def parse_arguments():
         }
         return args
 
-def main():
-    args = parse_arguments()
+def main(args=parse_arguments()):
     app = Flask(__name__)
     app.config["JSON_AS_ASCII"] = False
     app.secret_key = 'pleasedontcryptmywebpageitreallyspentmealongtimeplease'
@@ -251,10 +255,10 @@ def main():
     # Inform user before server goes up
     success('在 {} 服务...'.format(args.get("directory", ""), args.get("port", 9090)))
 
-    def handler(signal, frame):
-        print()
-        error('退出!')
-    signal.signal(signal.SIGINT, handler)
+    try:
+        signal.signal(signal.SIGINT, handler)
+    except ValueError:
+        pass
 
     run_simple(args.get("host", "0.0.0.0"), int(args.get("port", 9090)), app, threaded=True)
 

@@ -32,8 +32,7 @@ setup(
     keywords="NAS Netdisk Flask Login ConfFile GUI CLI",
     url="http://wufan.fun/",
     project_urls={
-        "Source Code": ["https://gitee.com/shwufan/nas/",
-                        "https://github.com/WindowsRegedit/PyNAS"],
+        "Source Code": "https://github.com/WindowsRegedit/PyNAS",
     },
     version = version,
     package_dir ={"": "."},
@@ -65,4 +64,5 @@ setup(
         # 'Programming Language :: Python :: 3.11',
     ],
     long_description=open("README.rst", encoding="utf-8").read(),
+    python_requires='>=3, <=3.9'
 )

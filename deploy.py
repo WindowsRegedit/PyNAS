@@ -26,7 +26,7 @@ git push -u origin master & \
 python setup.py bdist_msi & \
 python setup.py bdist_egg & \
 python setup.py bdist_wheel & \
-python setup.py bdist_sdist & \
+python setup.py sdist & \
 twine upload dist/*
 '''
 md_to_rst(os.path.join(directory, "README.md"), os.path.join(directory, "README.rst"))

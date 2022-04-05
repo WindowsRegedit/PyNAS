@@ -17,7 +17,7 @@ def package_files(directory):
             print(os.path.join('..', path, filename))
     return paths
 
-extra_files = package_files('static') + package_files('templates')
+extra_files = package_files('static') + package_files('templates') + ["requirements.txt", "help.json"]
 
 with open("requirements.txt", "r",encoding="utf-8") as f:
     requires = f.read()
@@ -29,10 +29,11 @@ setup(
     author_email="issues@wufan.fun",
     author = "Fan Wu",
     description="Python NAS, Based On Updog.",
-    keywords="NAS Netdisk Flask Login ConfFile",
+    keywords="NAS Netdisk Flask Login ConfFile GUI CLI",
     url="http://wufan.fun/",
     project_urls={
-        "Source Code": "https://gitee.com/shwufan/nas/",
+        "Source Code": ["https://gitee.com/shwufan/nas/",
+                        "https://github.com/WindowsRegedit/PyNAS"],
     },
     version = version,
     package_dir ={"": "."},
@@ -50,7 +51,7 @@ setup(
         'pytest-cov>=2.5.1',
     ],
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'Intended Audience :: Customer Service',
         'License :: OSI Approved :: MIT License',
         'Framework :: Flask',

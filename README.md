@@ -20,6 +20,7 @@ Python NAS 在updog的基础上编写而成.
 2. nas --config configure.json
 3. nas --username admin --password admin
 4. nas --host 0.0.0.0 --port 80 --username admin --password admin
+5. nas-gui
 
 #### 参与贡献
 
@@ -43,10 +44,9 @@ host: 网盘服务ip
 
 port: 网盘服务端口（默认9090）
 
-#### 更新说明
-1. 由于添加了GUI，所以版本临时改动至Alpha版
-2. GUI仍然不稳定，不建议使用（如果要使用，请输入nas-gui）
-3. 经过作者的测试，在Python3.9上比Python3.10稳定，所以暂时不会支持Python3.10以上版本
-4. 修复了GUI中文乱码的问题
-5. 使用 "*"代替了输入的密码
-6. 添加了验证输入合法性的函数
+#### PyNAS 2022.4.5.RC2更新说明
+1. (GUI)修复了按下确认按钮后没有开启服务的问题
+2. (GUI)删除了当按下文本组件时就验证的函数，只保留按下按钮时的验证
+3. (GUI)新增了”关于“和“帮助”组件栏
+4. (GUI)新增了检查到错误后删除错误的代码
+5. 更改至Beta版

@@ -13,7 +13,7 @@ def md_to_rst(from_file, to_file):
         with open(to_file, "wb") as f:
             f.write(response.content)
 
-directory = r"D:\私人物品\Python\nas"
+directory = os.getcwd()
 commit = input("输入commit消息：")
 
 code = f'''cd {directory} & \
@@ -23,7 +23,10 @@ rd /S /Q PyNAS.egg-info & \
 git add . & \
 git commit -am "{commit}" & \
 git push -u origin master & \
+python setup.py bdist_msi & \
+python setup.py bdist_egg & \
 python setup.py bdist_wheel & \
+python setup.py bdist_sdist & \
 twine upload dist/*
 '''
 md_to_rst(os.path.join(directory, "README.md"), os.path.join(directory, "README.rst"))

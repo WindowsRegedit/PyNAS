@@ -9,25 +9,46 @@ Python NAS 在updog的基础上编写而成.
 
 #### 安装教程
 
-1.  pip install PyNAS
-2.  git clone https://gitee.com/shwufan/nas.git
-    python setup.py install
+第一种：
+```
+pip install PyNAS
+```
+
+第二种：
+```
+git clone https://gitee.com/shwufan/nas.git
+python setup.py install
+```
+
+第三种：
+```
+git clone https://github.com/WindowsRegedit/PyNAS.git
+python setup.py install
+```
+
 
 #### 使用说明
 
 比如:
 1. nas -c conf.json
+
 2. nas --config configure.json
+
 3. nas --username admin --password admin
+
 4. nas --host 0.0.0.0 --port 80 --username admin --password admin
+
 5. nas-gui
 
 #### 参与贡献
 
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
+1. Fork 本仓库
+
+2. 新建 Feat_xxx 分支
+
+3. 提交代码
+
+4. 新建 Pull Request
 
 
 #### 教程
@@ -44,9 +65,11 @@ host: 网盘服务ip
 
 port: 网盘服务端口（默认9090）
 
-#### PyNAS 2022.4.5.RC2更新说明
-1. (GUI)修复了按下确认按钮后没有开启服务的问题
-2. (GUI)删除了当按下文本组件时就验证的函数，只保留按下按钮时的验证
-3. (GUI)新增了”关于“和“帮助”组件栏
-4. (GUI)新增了检查到错误后删除错误的代码
-5. 更改至Beta版
+#### PyNAS 2022.4.6更新说明
+1. (GUI)解决了服务日志乱码问题
+
+2. (GUI)(Server)添加了FTP服务
+
+3. (GUI)(Server)添加了密钥自定义功能
+
+4. (GUI)添加了服务日志彩色显示的功能

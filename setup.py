@@ -1,13 +1,15 @@
-import os, shutil
+import os
+import shutil
 from setuptools import setup
 from config import version
 
-#移除构建的build文件夹
+# 移除构建的build文件夹
 CUR_PATH = os.path.dirname(os.path.abspath(__file__))
 path = os.path.join(CUR_PATH, "build")
 if os.path.isdir(path):
     print("del dir ", path)
     shutil.rmtree(path)
+
 
 def package_files(directory):
     paths = []
@@ -17,26 +19,28 @@ def package_files(directory):
             print(os.path.join('..', path, filename))
     return paths
 
-extra_files = package_files('static') + package_files('templates') + ["requirements.txt", "help.json"]
 
-with open("requirements.txt", "r",encoding="utf-8") as f:
+extra_files = package_files(
+    'static') + package_files('templates') + ["requirements.txt", "help.json"]
+
+with open("requirements.txt", "r", encoding="utf-8") as f:
     requires = f.read()
     requires = requires.split("\n")
 
 
 setup(
-    name = "PyNAS",
+    name="PyNAS",
     author_email="issues@wufan.fun",
-    author = "Fan Wu",
+    author="Fan Wu",
     description="Python NAS, Based On Updog.",
     keywords="NAS Netdisk Flask Login ConfFile GUI CLI",
     url="http://wufan.fun/",
     project_urls={
         "Source Code": "https://github.com/WindowsRegedit/PyNAS",
     },
-    version = version,
-    package_dir ={"": "."},
-    package_data = {'': extra_files},
+    version=version,
+    package_dir={"": "."},
+    package_data={'': extra_files},
     entry_points={
         "console_scripts": [
             "nas = main:main",

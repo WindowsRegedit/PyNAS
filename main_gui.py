@@ -8,9 +8,9 @@ from threading import Thread
 from tkinter import *
 from tkinter.messagebox import showwarning as warn
 from tkinter.messagebox import showinfo as info
+import ttkbootstrap
 from ttkbootstrap import Style
 from main import main as m
-from main import handler
 
 
 def main():
@@ -64,13 +64,38 @@ def main():
             return False
         return True
 
+    def check_ftp_port():
+        if not ftp_port.get().isdigit() and use_ftp == 1:
+            warn("错误", "ftp端口必须是一个数字")
+            port.delete(0, END)
+            return False
+        if use_ftp == 1:
+            if int(ftp_port.get()) >= 65536 or int(
+                    ftp_port.get()) <= 1:
+                warn("错误", "ftp端口必须是一个数字并且在1-65536之间")
+                return False
+        if use_ftp == 1:
+            if int(ftp_port.get()) == int(port.get()):
+                warn("错误", "ftp端口与网盘端口相等")
+                return False
+        return True
+
+    def check_key():
+        if not key.get():
+            warn("错误", "密钥为空")
+            return False
+        return True
+
     def callback():
         args = {
             "directory": directory.get(),
             "username": username.get(),
             "password": password.get(),
             "host": host.get(),
-            "port": port.get()
+            "port": port.get(),
+            "ftp": bool(use_ftp.get()),
+            "ftp_port": ftp_port.get(),
+            "key": key.get(),
         }
         if not check_dir():
             return
@@ -81,6 +106,10 @@ def main():
         if not check_host():
             return
         if not check_port():
+            return
+        if not check_ftp_port():
+            return
+        if not check_key():
             return
         s = Thread(target=m, args=(args,))
         s.start()
@@ -94,7 +123,14 @@ def main():
             sys.stderr = self
 
         def write(self, info):
-            t.insert("end", info)
+            info = info.replace("", "")
+            info = info.replace("[0m", "")
+            info = info.replace("[32m", "")
+            info = info.replace("[36m", "")
+            if "200" in info:
+                t.insert("end", info, "success")
+            else:
+                t.insert("end", info, "info")
             t.update()
             t.see(END)
 
@@ -111,7 +147,7 @@ def main():
     root_window = style.master
     root_window.title("NAS启动服务工具")
     root_window.iconbitmap("./static/images/favicon.ico")
-    root_window.geometry("900x500")
+    root_window.geometry("900x700")
     root_window.attributes("-alpha", 0.9)
     menubar = Menu(root_window)
     menubar.add_command(label="帮助", command=help)
@@ -135,11 +171,35 @@ def main():
     Label(input_frame, text="服务端口：", font=("Times", 15)).grid(column=1, row=5)
     port = Entry(input_frame)
     port.grid(column=2, row=5)
+    Label(input_frame, text="服务密钥：", font=("Times", 15)).grid(column=1, row=6)
+    key = Entry(input_frame, show="*")
+    key.grid(column=2, row=6)
+    use_ftp = IntVar()
+    ttkbootstrap.Radiobutton(
+        input_frame,
+        text="使用FTP",
+        variable=use_ftp,
+        value=1).grid(
+        column=1,
+        row=7)
+    ttkbootstrap.Radiobutton(
+        input_frame,
+        text="不使用FTP",
+        variable=use_ftp,
+        value=0).grid(
+        column=2,
+        row=7)
+    Label(input_frame, text="FTP端口：", font=("Times", 15)).grid(column=1, row=8)
+    ftp_port = Entry(input_frame)
+    ftp_port.grid(column=2, row=8)
     Button(input_frame, text="确认", command=callback,
-           width=8, height=1).grid(column=2, row=6)
+           width=8, height=1).grid(column=2, row=9)
     col_count, row_count = input_frame.grid_size()
     server_frame = Frame()
-    t = st.ScrolledText(server_frame)
+    t = st.ScrolledText(server_frame, width=75, height=50)
+    t.tag_config("success", foreground="green")
+    t.tag_config("info", foreground="blue")
+    t.tag_config("error", foreground="red")
     t.pack()
     server_frame.pack(side="right")
 

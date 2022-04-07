@@ -129,6 +129,10 @@ def main():
             info = info.replace("[36m", "")
             if "200" in info:
                 t.insert("end", info, "success")
+            elif "302" in info or "304" in info:
+                t.insert("end", info, "redirect")
+            elif "500" in info:
+                t.insert("end", info, "error")
             else:
                 t.insert("end", info, "info")
             t.update()
@@ -200,6 +204,7 @@ def main():
     t.tag_config("success", foreground="green")
     t.tag_config("info", foreground="blue")
     t.tag_config("error", foreground="red")
+    t.tag_config("redirect", foreground="yellow")
     t.pack()
     server_frame.pack(side="right")
 

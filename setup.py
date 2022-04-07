@@ -68,5 +68,4 @@ setup(
         # 'Programming Language :: Python :: 3.11',
     ],
     long_description=open("README.rst", encoding="utf-8").read(),
-    python_requires='>=3, <=3.9'
 )

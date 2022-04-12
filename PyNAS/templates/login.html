@@ -14,9 +14,9 @@
             var password=document.getElementById("password").value;
             var next=document.getElementById("next").value;
             var extent="/ajax/login?name="+username+"&pwd="+password+"&next="+next;
-            var URL="http://"+window.location.host+extent;
+            var URL=document.getElementById("schema").value+"://"+window.location.host+extent;
             window.location.href=URL;
-	}
+	    }
     </script>		
     </head>
 
@@ -31,6 +31,11 @@
             <input type="password" placeholder="请输入密码" id="password">
         </div>
         <input type="hidden" value="{{ next }}" id="next">
+        {% if use_ssl %}
+        <input type="hidden" value="https" id="schema">
+        {% else %}
+        <input type="hidden" value="http" id="schema">
+        {% endif %}
         <div class="btn">
             <button class="login_btn" onclick="GetURL()">登 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录</button>
         </div>

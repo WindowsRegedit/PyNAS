@@ -1,7 +1,7 @@
 import os
 import shutil
-from setuptools import setup
-from config import version
+from setuptools import setup, find_packages
+from PyNAS.config import version
 
 # 移除构建的build文件夹
 CUR_PATH = os.path.dirname(os.path.abspath(__file__))
@@ -16,17 +16,14 @@ def package_files(directory):
     for (path, directories, filenames) in os.walk(directory):
         for filename in filenames:
             paths.append(os.path.join('..', path, filename))
-            print(os.path.join('..', path, filename))
     return paths
 
 
-extra_files = package_files(
-    'static') + package_files('templates') + ["requirements.txt", "help.json"]
+extra_files = package_files('PyNAS') + ["PyNAS/LICENSE"]
 
 with open("requirements.txt", "r", encoding="utf-8") as f:
     requires = f.read()
     requires = requires.split("\n")
-
 
 setup(
     name="PyNAS",
@@ -43,8 +40,8 @@ setup(
     package_data={'': extra_files},
     entry_points={
         "console_scripts": [
-            "nas = main:main",
-            "nas-gui = main_gui:main"
+            "nas = PyNAS.main:main",
+            "nas-gui = PyNAS.main_gui:main"
         ]
     },
     include_package_data=True,
@@ -54,7 +51,7 @@ setup(
         'pytest-cov>=2.5.1',
     ],
     classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Customer Service',
         'License :: OSI Approved :: MIT License',
         'Framework :: Flask',
@@ -68,4 +65,5 @@ setup(
         # 'Programming Language :: Python :: 3.11',
     ],
     long_description=open("README.rst", encoding="utf-8").read(),
+    packages=find_packages(),
 )

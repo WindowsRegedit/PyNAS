@@ -1,89 +1,87 @@
-PyNAS
-=====
-
 介绍
-^^^^
+~~~~
 
-Python NAS 在updog的基础上编写而成.
-
-软件架构
-^^^^^^^^
-
-使用 Flask, Flask-Login, Flask-WTF 制作登陆界面.
-
-安装教程
-^^^^^^^^
-
-第一种：
-
-::
-
-    pip install PyNAS
-
-第二种：
-
-::
-
-    git clone https://gitee.com/shwufan/nas.git
-    python setup.py install
-
-第三种：
+PyNAS是一个以Python的Updog的库为基础，制作而来的库 ###安装 1.
+pip安装（推荐） ``pip install PyNAS`` 2. 源码安装（推荐） Github:
 
 ::
 
     git clone https://github.com/WindowsRegedit/PyNAS.git
+    cd PyNAS
     python setup.py install
 
-使用说明
-^^^^^^^^
+Gitee:
 
-比如: 1. nas -c conf.json
+::
 
-2. nas --config configure.json
+    git clone https://gitee.com/shwufan/nas.git
+    cd nas
+    python setup.py install
 
-3. nas --username admin --password admin
+3. 安装包安装
 
-4. nas --host 0.0.0.0 --port 80 --username admin --password admin
+   ::
 
-5. nas-gui
+       从https://github.com/WindowsRegedit/PyNAS/releases或https://gitee.com/shwufan/nas/releases下载安装包
+       然后自行安装......
 
-参与贡献
-^^^^^^^^
+4. easy\_install安装（不推荐）（即将弃用） ``easy_install PyNAS``
 
-1. Fork 本仓库
+用法
+~~~~
 
-2. 新建 Feat\_xxx 分支
+GUI窗口启动：
 
-3. 提交代码
+::
 
-4. 新建 Pull Request
+    1. nas-gui
+    2. python -m PyNAS
 
-教程
-^^^^
+命令行启动
 
-nas 配置编写指南：
+::
 
-username: 登陆用户名
+    usage: nas [-h] [-d DIRECTORY] [-p PORT] [-usr USERNAME [USERNAME ...]] [-pwd PASSWORD [PASSWORD ...]] [-v]
+               [-host HOST] [-c CONFIG] [-f] [-fp FTP_PORT] [-se SECRET] [-s] [-st SSL_TYPE] [-ce CERT] [-k KEY]
 
-password: 登陆密码
+    nas服务器启动工具
 
-host: 网盘服务ip
+    选择性参数:
+      -h, --help            显示帮助信息
+      -d DIRECTORY, --directory DIRECTORY
+                            根目录，默认当前路径
+      -p PORT, --port PORT  服务端口，默认为80
+      -usr USERNAME [USERNAME ...], --username USERNAME [USERNAME ...]
+                            用户名列表，默认为admin
+      -pwd PASSWORD [PASSWORD ...], --password PASSWORD [PASSWORD ...]
+                            密码列表（注意要和用户名列表相同长度），默认为admin
+      -v, --version         Python NAS 版本
+      -host HOST, --host HOST
+                            服务IP，默认为0.0.0.0
+      -c CONFIG, --config CONFIG
+                            配置文件位置，默认没有，注意此文件会覆盖所有命令行配置
+      -f, --ftp             是否开启FTP服务（默认关闭）
+      -fp FTP_PORT, --ftp_port FTP_PORT
+                            FTP服务开启端口（当-f被指定时）（默认2121）
+      -se SECRET, --secret SECRET
+                            运行网盘时的加密字符串（默认有的）
+      -s, --ssl             是否开启SSL（默认关闭）
+      -st SSL_TYPE, --ssl_type SSL_TYPE
+                            在开启SSL的情况下使用哪种方式（自动/手动）自动的话参数里加auto，手动的话参数里加custom（默认自动）
+      -ce CERT, --cert CERT
+                            在选择手动并开启SSL的情况下使用的证书（比如cert.pem）
+      -k KEY, --key KEY     在选择手动并开启SSL的情况下使用的密钥（比如key.pem）
+    配置文件同理（注意是json格式，并且要用全拼）。
+    例如：
+    一个叫做conf.json的文件：
+    {"key": "1234567", "ssl_type": "auto"}
 
-（0.0.0.0允许所有人访问, 127.0.0.1只有自己能访问，默认0.0.0.0）
+PyNAS 2022.4.15版本更新内容
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-port: 网盘服务端口（默认9090）
+1. 使用装饰器优化GUI
 
-PyNAS 2022.4.12 正式版更新说明
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PyNAS 2022.4.15版本已知问题
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-1. 优化了requirements.txt
-
-2. 解决了nas-gui无法调用的问题
-
-3. 将nas-gui设置为默认使用python -m PyNAS调用包时打开的程序
-
-4. 解决了SSL使用时导致连接拒绝的问题
-
-5. 添加了一些没有添加的包
-
-6. 现在可以添加多个用户了
+1. 在某些设备上路径的第一个字符有可能会丢失（求pr）

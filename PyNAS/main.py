@@ -51,7 +51,13 @@ def parse_arguments():
                         help="根目录，默认当前路径")
     parser.add_argument("-p", "--port", type=int, default=80,
                         help="服务端口，默认为80")
-    parser.add_argument("-usr", "--username", type=str, nargs='+', help="用户名列表，默认为admin", default=["admin"])
+    parser.add_argument(
+        "-usr",
+        "--username",
+        type=str,
+        nargs='+',
+        help="用户名列表，默认为admin",
+        default=["admin"])
     parser.add_argument("-pwd", "--password", type=str, nargs='+', help="密码列表（注意要和用户名列表相同长度），默认为admin",
                         default=["admin"])
     parser.add_argument(

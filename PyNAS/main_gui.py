@@ -1,35 +1,47 @@
 # coding=utf-8
-import re
-import os
-import sys
 import json
+import os
 import platform
+import re
+import sys
+import webbrowser
 import tkinter.scrolledtext as st
-from tkinter import ttk
 from threading import Thread
-from tkinter import filedialog
-from tkinter.simpledialog import askstring
 from tkinter import *
+from tkinter import filedialog
 from tkinter.messagebox import showerror as error
 from tkinter.messagebox import showinfo as info
 from tkinter.messagebox import showwarning as warn
+from tkinter.simpledialog import askstring
+
 import ttkbootstrap
 from ttkbootstrap import Style
+
 from PyNAS.main import main as m
 
 
 def main():
+    check_func = []
     cwd = os.path.dirname(__file__)
+
+    def check(f):
+        check_func.append(f)
+
     def help():
         with open(os.path.join(cwd, "help.json"), encoding="utf-8") as f:
             helps = json.load(f)["helps"]
         for help in helps:
             info("帮助", help)
+
     def LICENSE():
         with open(os.path.join(cwd, "LICENSE"), encoding="utf-8") as f:
             license = f.read()
         info("关于", license)
 
+    def SOURCE_CODE():
+        webbrowser.open_new_tab("https://github.com/WindowsRegedit/PyNAS")
+
+    @check
     def check_dir():
         if not os.path.exists(directory.get()):
             error("错误", "路径不存在或不正确")
@@ -37,6 +49,7 @@ def main():
             return False
         return True
 
+    @check
     def check_host():
         match = re.match(
             "^((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})(\\.((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})){3}$",
@@ -47,6 +60,7 @@ def main():
             return False
         return True
 
+    @check
     def check_port():
         if not port.get().isdigit():
             error("错误", "端口必须是一个数字")
@@ -55,12 +69,9 @@ def main():
         if not (int(port.get()) <= 65536 or int(port.get()) >= 1):
             error("错误", "端口必须是一个数字并且在1-65536之间")
             return False
-        if use_ssl.get() == 1 and int(port.get()) != 443:
-            warn("警告", "当使用SSL时只能使用443端口")
-            port.delete(0, END)
-            port.insert(0, "443")
         return True
 
+    @check
     def check_ftp_port():
         if not ftp_port.get().isdigit() and use_ftp == 1:
             error("错误", "ftp端口必须是一个数字")
@@ -79,12 +90,14 @@ def main():
                 return False
         return True
 
+    @check
     def check_key():
         if not key.get():
             error("错误", "密钥为空")
             return False
         return True
 
+    @check
     def check_ssl():
         if use_ssl == 1 and type_ssl.get() == "手动选择证书文件" and not (
                 cert_file.get() or key_file.get()):
@@ -92,6 +105,7 @@ def main():
             return False
         return True
 
+    @check
     def check_user():
         if not tree.get_children():
             error("错误", "未添加任何用户")
@@ -107,9 +121,12 @@ def main():
             return
         user.append({"user": username, "password": password})
 
-        tree.insert('', END, values=[username, "*"*len(password)])
+        tree.insert('', END, values=[username, "*" * len(password)])
 
     def callback():
+        for f in check_func:
+            if not f():
+                return
         username = []
         password = []
         for i in user:
@@ -129,20 +146,6 @@ def main():
             "key": key_file.get(),
             "cert": cert_file.get()
         }
-        if not check_dir():
-            return
-        if not check_host():
-            return
-        if not check_port():
-            return
-        if not check_ftp_port():
-            return
-        if not check_key():
-            return
-        if not check_ssl():
-            return
-        if not check_user():
-            return
         s = Thread(target=m, args=(args,))
         s.start()
 
@@ -206,7 +209,10 @@ def main():
     root_window.attributes("-alpha", 0.9)
     menubar = Menu(root_window)
     menubar.add_command(label="帮助", command=help)
-    menubar.add_command(label="关于", command=LICENSE)
+    aboutbar = Menu(menubar)
+    menubar.add_cascade(label="关于", menu=aboutbar, underline=0)
+    aboutbar.add_command(label="版权", command=LICENSE)
+    aboutbar.add_command(label="源代码", command=SOURCE_CODE)
     root_window.config(menu=menubar)
     input_frame = Frame(root_window)
     Label(input_frame, text="网盘路径：", font=("Times", 15)).grid(column=1, row=1)
@@ -307,7 +313,7 @@ def main():
            width=8, height=1).grid(column=2, row=11)
     col_count, row_count = input_frame.grid_size()
     server_frame = Frame()
-    t = st.ScrolledText(server_frame, width=int(w//20), height=h)
+    t = st.ScrolledText(server_frame, width=int(w // 20), height=h)
     t.tag_config("success", foreground="green")
     t.tag_config("info", foreground="blue")
     t.tag_config("error", foreground="red")
@@ -318,7 +324,7 @@ def main():
 
     user = []
     columns = ("用户名", "用户密码")
-    tree = ttkbootstrap.Treeview(user_frame, show="headings", columns=columns, selectmode=BROWSE, height=h-700)
+    tree = ttkbootstrap.Treeview(user_frame, show="headings", columns=columns, selectmode=BROWSE, height=h - 700)
     tree.column("用户名", anchor="center")
     tree.column("用户密码", anchor="center")
     tree.heading("用户名", text="用户名")

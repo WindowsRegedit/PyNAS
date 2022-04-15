@@ -28,7 +28,6 @@ git commit -am "{commit}" & \
 git push -u origin {branch} & \
 python setup.py bdist_egg & \
 python setup.py bdist_wheel & \
-python setup.py sdist & \
 twine upload dist/*
 '''
 md_to_rst(

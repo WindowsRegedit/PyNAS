@@ -1,7 +1,7 @@
 import os
-
 from math import log2
 from time import ctime
+from urllib.parse import quote
 
 
 def is_valid_subpath(relative_directory, base_directory):
@@ -40,7 +40,7 @@ def process_files(directory_files, base_directory):
         files.append({
             'name': file.name,
             'is_dir': file.is_dir(),
-            'rel_path': get_relative_path(file.path, base_directory),
+            'rel_path': quote(get_relative_path(file.path, base_directory)),
             'size': size,
             'size_sort': size_sort,
             'last_modified': ctime(file.stat().st_mtime),

@@ -19,6 +19,13 @@ def package_files(directory):
     return paths
 
 
+try:
+    import _tkinter
+except:
+    raise RuntimeError("错误：tkinter模块不存在")
+else:
+    del _tkinter
+
 extra_files = package_files('PyNAS') + ["PyNAS/LICENSE"]
 
 with open("requirements.txt", "r", encoding="utf-8") as f:
